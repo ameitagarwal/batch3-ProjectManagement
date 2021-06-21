@@ -52,15 +52,15 @@ namespace ProductManagement.Data.Services
 
         public Category GetCategoryById(int CategoryId)
         {
-            // var a = _context.Categories.First(a => a.CategoryId == CategoryId); // Code Breaks since no record exists
-            // var b = _context.Categories.FirstOrDefault(a => a.CategoryId == CategoryId); // Doesn't break , since it takes default value
+            //var a = _context.Categories.First(a => a.CategoryId == CategoryId); // Code Breaks since no record exists
+            //var b = _context.Categories.FirstOrDefault(a => a.CategoryId == CategoryId); // Doesn't break , since it takes default value
             // var c = _context.Categories.Single(a => a.CategoryId == CategoryId); // Code Breaks since no record exists
             // var f = _context.Categories.SingleOrDefault(a => a.CategoryId == CategoryId); // Doesn't break , since it takes default value
-            // var d = _context.Categories.Where(a => a.CategoryId == CategoryId).FirstOrDefault();
-            // var e = _context.Categories.Find(2);
+            // var d = _context.Categories.Where(a => a.CategoryId == CategoryId);
+            // var e = _context.Categories.Find(5);
 
             // var g = _context.Categories.Single(a => a.Name == "Mobile"); // Code Breaks since more than 1 record exists
-            var h = _context.Categories.SingleOrDefault(a => a.Name == "Mobile"); // Code Breaks since more than 1 record exists
+            //var h = _context.Categories.SingleOrDefault(a => a.Name == "Mobile"); // Code Breaks since more than 1 record exists
             return _context.Categories.FirstOrDefault(a => a.CategoryId == CategoryId);
         }
 

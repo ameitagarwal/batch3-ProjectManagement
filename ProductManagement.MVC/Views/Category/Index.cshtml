@@ -1,1 +1,36 @@
-﻿
+﻿@model IEnumerable<CategoryDto>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>Category Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>
+                    <a asp-action="AddOrEdit" class="btn btn-outline-success"><i class="far fa-plus-square"></i>Add Category</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>
+                        @category.CategoryId
+                    </td>
+                    <td>
+                        @category.Name
+                    </td>
+                    <td>
+                        @category.Description
+                    </td>
+                    <td>
+                        <a asp-action="AddOrEdit" asp-route-categoryId="@category.CategoryId" class="btn btn-outline-success"><i class="far fa-plus-square"></i>Edit Category</a>
+                        <a asp-action="Delete" asp-route-categoryId="@category.CategoryId" class="text-danger ml-1" onclick="return confirm('Are you sure to delete this record?')"><i class="fa fa-trash-alt fa-lg"></i>Delete Category</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
