@@ -8,7 +8,7 @@ using ProductManagement.Data;
 using ProductManagement.Data.Services;
 using System;
 
-namespace ProductManagement.MVC
+namespace ProjectManagement.WebApi
 {
     public class Startup
     {
@@ -43,20 +43,12 @@ namespace ProductManagement.MVC
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-            app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Category}/{action=Index}/{id?}");
+
             });
         }
     }
