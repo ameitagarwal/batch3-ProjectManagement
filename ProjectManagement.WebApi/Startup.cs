@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using ProductManagement.Data;
 using ProductManagement.Data.Services;
 using System;
+using System.IO;
 
 namespace ProjectManagement.WebApi
 {
@@ -37,18 +39,23 @@ namespace ProjectManagement.WebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
         {
+            var path = Directory.GetCurrentDirectory();
+            logger.AddFile($"{path}\\Logs\\Log.txt");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            //app.UseMiddleware<ExceptionHandlingMiddleware>();
+            app.UseExceptionHandlingMiddleware();
 
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-
+                endpoints.MapControllers();
             });
         }
     }

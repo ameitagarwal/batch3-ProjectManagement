@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ProductManagement.Data.Entities;
 using ProductManagement.Data.Services;
 using ProjectManagement.WebApi.Models;
@@ -7,16 +8,19 @@ using System.Collections.Generic;
 
 namespace ProjectManagement.WebApi.Controllers
 {
-    [Route("api/category")]
+    [Route("api/[Controller]")]
+    [ApiController]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<CategoryController> _log;
 
-        public CategoryController(ICategoryRepository categoryRepository, IMapper mapper)
+        public CategoryController(ICategoryRepository categoryRepository, IMapper mapper, ILogger<CategoryController> log)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
+            _log = log;
         }
 
         [HttpGet]
@@ -24,66 +28,44 @@ namespace ProjectManagement.WebApi.Controllers
         {
             var categories = _categoryRepository.GetAllCategories();
             List<CategoryDto> cst = _mapper.Map<List<CategoryDto>>(categories);
+            _log.LogInformation("GetAllCategories method is called");
             return Ok(cst);
+
         }
 
-        [HttpGet("{categoryId}")]
+        [HttpGet("{categoryId}", Name = "CategoryById")]
         public IActionResult GetCategoryById(int categoryId)
         {
             var categories = _categoryRepository.GetCategoryById(categoryId);
             CategoryDto cst = _mapper.Map<CategoryDto>(categories);
-            return Ok(cst); s
+            return Ok(cst);
         }
 
         [HttpPost]
-        public IActionResult InsertCategory(CategoryDto categoryObj)
+        public IActionResult InsertCategory([FromBody] CategoryDto categoryObj)
         {
-            if (ModelState.IsValid)
-            {
-                Category cst = _mapper.Map<Category>(categoryObj);
-                _categoryRepository.AddCategory(cst);
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
-
+            Category cst = _mapper.Map<Category>(categoryObj);
+            _categoryRepository.AddCategory(cst);
+            return Ok();
         }
 
         [HttpPost("InsertList")]
-        public IActionResult InsertCategories(List<CategoryDto> categoryObj)
+        public IActionResult InsertCategories([FromBody] List<CategoryDto> categoryObj)
         {
-            if (ModelState.IsValid)
-            {
-                Category cst = _mapper.Map<Category>(categoryObj);
-                _categoryRepository.AddCategory(cst);
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
-
+            List<Category> cst = _mapper.Map<List<Category>>(categoryObj);
+            _categoryRepository.AddCategoryList(cst);
+            return Ok();
         }
 
         [HttpPut]
-        public IActionResult UpdateCategory(CategoryDto categoryObj)
+        public IActionResult UpdateCategory([FromBody] CategoryDto categoryObj)
         {
-            if (ModelState.IsValid)
-            {
-                Category cst = _mapper.Map<Category>(categoryObj);
-                _categoryRepository.UpdateCategory(cst);
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
-
+            Category cst = _mapper.Map<Category>(categoryObj);
+            _categoryRepository.UpdateCategory(cst);
+            return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{categoryId}")]
         public IActionResult DeleteCategory(int categoryId)
         {
             _categoryRepository.DeleteCategory(categoryId);

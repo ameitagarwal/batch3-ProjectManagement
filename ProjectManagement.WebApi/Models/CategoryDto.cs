@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjectManagement.WebApi.Models
 {
@@ -16,5 +12,7 @@ namespace ProjectManagement.WebApi.Models
         [Required]
         [MinLength(3)]
         public string Description { get; set; }
+
+        public List<ProductDto> Products { get; set; } = new List<ProductDto>();
     }
 }

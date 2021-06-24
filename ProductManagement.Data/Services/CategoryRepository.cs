@@ -1,4 +1,5 @@
-﻿using ProductManagement.Data.Entities;
+﻿using Microsoft.Extensions.Logging;
+using ProductManagement.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
