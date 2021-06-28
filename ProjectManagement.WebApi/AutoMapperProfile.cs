@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ProductManagement.Data.Entities;
+using ProductManagement.WebAPI.Models;
 using ProjectManagement.WebApi.Models;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace ProjectManagement.WebApi
                 .ReverseMap();
 
             CreateMap<Product, ProductDto>().ReverseMap();
+
+            CreateMap<AuthenticateRequest, User>().ReverseMap();
 
         }
     }

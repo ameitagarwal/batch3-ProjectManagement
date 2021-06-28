@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
 using ProductManagement.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +22,10 @@ namespace ProductManagement.Data.Services
 
         public bool AddCategoryList(List<Category> Categorys)
         {
+            //foreach (var Category in Categorys)
+            //{
+            //    _context.Categories.Add(Category);
+            //}            
             _context.Categories.AddRange(Categorys);
             return SaveChanges();
         }
@@ -48,6 +52,7 @@ namespace ProductManagement.Data.Services
         public List<Category> GetAllCategories()
         {
             return _context.Categories
+                .Include(a => a.Products)
                 .ToList();
         }
 

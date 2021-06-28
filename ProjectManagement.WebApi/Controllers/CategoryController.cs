@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProductManagement.Data.Entities;
 using ProductManagement.Data.Services;
+using ProductManagement.WebAPI.Helpers;
 using ProjectManagement.WebApi.Models;
 using System.Collections.Generic;
 
@@ -10,6 +11,7 @@ namespace ProjectManagement.WebApi.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -30,7 +32,6 @@ namespace ProjectManagement.WebApi.Controllers
             List<CategoryDto> cst = _mapper.Map<List<CategoryDto>>(categories);
             _log.LogInformation("GetAllCategories method is called");
             return Ok(cst);
-
         }
 
         [HttpGet("{categoryId}", Name = "CategoryById")]

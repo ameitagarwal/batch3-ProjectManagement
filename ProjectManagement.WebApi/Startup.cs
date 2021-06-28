@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ProductManagement.Data;
 using ProductManagement.Data.Services;
+using ProductManagement.WebAPI.Helpers;
 using System;
 using System.IO;
 
@@ -31,8 +32,14 @@ namespace ProjectManagement.WebApi
                 options.UseSqlServer(_config.GetConnectionString("DevConnection"))
                 );
 
+            // configure strongly typed settings object
+            services.Configure<AppSettings>(_config.GetSection("AppSettings"));
+
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<GenerateToken>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -52,6 +59,9 @@ namespace ProjectManagement.WebApi
             app.UseExceptionHandlingMiddleware();
 
             app.UseRouting();
+
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

@@ -18,6 +18,7 @@ namespace ProductManagement.MVC.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             var categories = _categoryRepository.GetAllCategories();
