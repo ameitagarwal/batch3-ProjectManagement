@@ -18,7 +18,6 @@ namespace ProductManagement.MVC.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
         public IActionResult Index()
         {
             var categories = _categoryRepository.GetAllCategories();
@@ -32,11 +31,16 @@ namespace ProductManagement.MVC.Controllers
             if (categoryId > 0)
             {
                 var category = _categoryRepository.GetCategoryById(categoryId);
-                return View(category);
+                CategoryDto cst = _mapper.Map<CategoryDto>(category);
+                return View(cst);
             }
             else
             {
-                return View();
+                CategoryDto cst = new CategoryDto
+                {
+                    CategoryId = 0
+                };
+                return View(cst);
             }
         }
 
